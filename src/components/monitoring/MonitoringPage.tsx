@@ -22,12 +22,12 @@ const MonitoringPage: React.FC = () => {
   // Mock data generator
   const generateMockData = (): MonitoringData[] => {
     const sensors = [
-      { name: 'Sensor Suhu A1', type: 'sensor', unit: '°C', location: 'Ruang Server' },
-      { name: 'Sensor Kelembaban B1', type: 'sensor', unit: '%', location: 'Gudang' },
-      { name: 'Voltase Sistem', type: 'operational', unit: 'V', location: 'Panel Utama' },
-      { name: 'Konsumsi BBM', type: 'fuel', unit: 'L/h', location: 'Generator' },
-      { name: 'Tekanan Udara', type: 'sensor', unit: 'bar', location: 'Kompresor' },
-      { name: 'Status Maintenance', type: 'maintenance', unit: '%', location: 'Sistem' },
+      { name: 'BBM Level DT-001', type: 'fuel', unit: '%', location: 'Dump Truck DT-001' },
+      { name: 'GPS Tracker DT-001', type: 'operational', unit: 'km/h', location: 'Area Tambang A' },
+      { name: 'Engine Temp EX-002', type: 'sensor', unit: '°C', location: 'Excavator EX-002' },
+      { name: 'Fuel Flow BD-003', type: 'fuel', unit: 'L/h', location: 'Bulldozer BD-003' },
+      { name: 'Vibration Sensor DT-004', type: 'sensor', unit: 'Hz', location: 'Dump Truck DT-004' },
+      { name: 'Load Weight DT-001', type: 'operational', unit: 'ton', location: 'Dump Truck DT-001' },
     ];
 
     return sensors.map((sensor, index) => {
@@ -38,23 +38,36 @@ const MonitoringPage: React.FC = () => {
       switch (sensor.type) {
         case 'sensor':
           if (sensor.unit === '°C') {
-            value = 20 + Math.random() * 40; // 20-60°C
-            status = value > 50 ? 'critical' : value > 40 ? 'warning' : 'normal';
-          } else if (sensor.unit === '%') {
-            value = 30 + Math.random() * 40; // 30-70%
-            status = value > 65 ? 'warning' : value < 35 ? 'warning' : 'normal';
+            value = 70 + Math.random() * 50; // 70-120°C for engine temp
+            status = value > 110 ? 'critical' : value > 95 ? 'warning' : 'normal';
+          } else if (sensor.unit === 'Hz') {
+            value = 10 + Math.random() * 20; // 10-30 Hz vibration
+            status = value > 25 ? 'critical' : value > 20 ? 'warning' : 'normal';
           } else {
-            value = 1 + Math.random() * 3; // 1-4 bar
+            value = 1 + Math.random() * 3; // 1-4 
             status = value > 3.5 ? 'critical' : value > 3 ? 'warning' : 'normal';
           }
           break;
         case 'operational':
-          value = 220 + Math.random() * 20; // 220-240V
-          status = value < 210 || value > 240 ? 'critical' : value < 220 || value > 235 ? 'warning' : 'normal';
+          if (sensor.unit === 'km/h') {
+            value = Math.random() * 60; // 0-60 km/h
+            status = value > 50 ? 'warning' : 'normal';
+          } else if (sensor.unit === 'ton') {
+            value = 10 + Math.random() * 40; // 10-50 ton load
+            status = value > 45 ? 'warning' : 'normal';
+          } else {
+            value = 220 + Math.random() * 20; // 220-240V
+            status = value < 210 || value > 240 ? 'critical' : value < 220 || value > 235 ? 'warning' : 'normal';
+          }
           break;
         case 'fuel':
-          value = 2 + Math.random() * 3; // 2-5 L/h
-          status = value > 4.5 ? 'warning' : 'normal';
+          if (sensor.unit === '%') {
+            value = 20 + Math.random() * 60; // 20-80% fuel level
+            status = value < 25 ? 'critical' : value < 40 ? 'warning' : 'normal';
+          } else {
+            value = 15 + Math.random() * 25; // 15-40 L/h consumption
+            status = value > 35 ? 'warning' : 'normal';
+          }
           break;
         case 'maintenance':
           value = 70 + Math.random() * 30; // 70-100%
@@ -77,6 +90,7 @@ const MonitoringPage: React.FC = () => {
         metadata: {
           trend: Math.random() > 0.5 ? 'up' : Math.random() > 0.5 ? 'down' : 'stable',
           lastMaintenance: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+          vehicleId: sensor.location.split(' ').pop(), // Extract vehicle ID
         },
       };
     });
@@ -90,8 +104,8 @@ const MonitoringPage: React.FC = () => {
         alerts.push({
           id: `alert-${item.id}`,
           type: 'critical',
-          title: `${item.name} - Status Kritis`,
-          message: `Nilai ${item.value}${item.unit} melebihi batas aman`,
+          title: `${item.name} - KRITIS`,
+          message: `${item.location}: ${item.value}${item.unit} melebihi batas aman`,
           isRead: Math.random() > 0.7,
           createdAt: new Date().toISOString(),
         });
@@ -99,8 +113,8 @@ const MonitoringPage: React.FC = () => {
         alerts.push({
           id: `alert-${item.id}`,
           type: 'warning',
-          title: `${item.name} - Peringatan`,
-          message: `Nilai ${item.value}${item.unit} mendekati batas`,
+          title: `${item.name} - PERINGATAN`,
+          message: `${item.location}: ${item.value}${item.unit} mendekati batas`,
           isRead: Math.random() > 0.5,
           createdAt: new Date().toISOString(),
         });
@@ -172,9 +186,9 @@ const MonitoringPage: React.FC = () => {
   const getSensorIcon = (type: string) => {
     switch (type) {
       case 'sensor':
-        return <Thermometer className="text-blue-600" size={24} />;
+        return <Thermometer className="text-orange-600" size={24} />;
       case 'operational':
-        return <Zap className="text-yellow-600" size={24} />;
+        return <Activity className="text-blue-600" size={24} />;
       case 'fuel':
         return <Gauge className="text-green-600" size={24} />;
       case 'maintenance':
@@ -193,9 +207,9 @@ const MonitoringPage: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Monitoring Data</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Monitoring BBM & Kendaraan</h1>
           <p className="text-gray-600 mt-1">
-            Pemantauan real-time sistem dan sensor
+            Pemantauan real-time konsumsi BBM, lokasi, dan kondisi kendaraan tambang
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -218,7 +232,7 @@ const MonitoringPage: React.FC = () => {
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Sensor</p>
+              <p className="text-sm font-medium text-gray-600">Total Kendaraan</p>
               <p className="text-3xl font-bold text-gray-900">{monitoringData.length}</p>
             </div>
             <Activity className="text-blue-600" size={48} />
@@ -248,7 +262,7 @@ const MonitoringPage: React.FC = () => {
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Kritis</p>
+              <p className="text-sm font-medium text-gray-600">Status Kritis</p>
               <p className="text-3xl font-bold text-red-600">{criticalCount}</p>
             </div>
             <AlertTriangle className="text-red-600" size={48} />
@@ -259,7 +273,7 @@ const MonitoringPage: React.FC = () => {
       {/* Active Alerts */}
       {alerts.length > 0 && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Alert Aktif</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Alert BBM & Kendaraan</h2>
           <div className="space-y-3">
             {alerts.slice(0, 5).map((alert) => (
               <div
@@ -288,7 +302,7 @@ const MonitoringPage: React.FC = () => {
         </div>
       )}
 
-      {/* Monitoring Data Grid */}
+      {/* Vehicle Monitoring Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {monitoringData.map((item) => (
           <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -315,7 +329,7 @@ const MonitoringPage: React.FC = () => {
 
             <div className="flex items-center justify-between">
               <span className={`px-3 py-1 text-sm rounded-full border ${getStatusColor(item.status)}`}>
-                {item.status === 'critical' ? 'Kritis' :
+                {item.status === 'critical' ? 'KRITIS' :
                  item.status === 'warning' ? 'Peringatan' : 'Normal'}
               </span>
               <span className="text-xs text-gray-500">
@@ -326,7 +340,7 @@ const MonitoringPage: React.FC = () => {
             {item.metadata?.lastMaintenance && (
               <div className="mt-3 pt-3 border-t border-gray-200">
                 <p className="text-xs text-gray-500">
-                  Maintenance terakhir: {new Date(item.metadata.lastMaintenance).toLocaleDateString('id-ID')}
+                  Service terakhir: {new Date(item.metadata.lastMaintenance).toLocaleDateString('id-ID')}
                 </p>
               </div>
             )}
@@ -337,7 +351,7 @@ const MonitoringPage: React.FC = () => {
       {isLoading && (
         <div className="text-center py-8">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Memuat data monitoring...</p>
+          <p className="text-gray-600">Memuat data monitoring kendaraan...</p>
         </div>
       )}
     </div>

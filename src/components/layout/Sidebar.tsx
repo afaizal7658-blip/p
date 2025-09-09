@@ -1,17 +1,19 @@
 import React from 'react';
 import { 
   Home, 
-  Package, 
+  Truck,
+  Fuel,
   Users, 
   MessageSquare, 
   Wrench, 
-  BarChart3, 
+  BarChart3,
   Settings,
-  ShoppingCart,
-  CreditCard,
-  Monitor,
+  MapPin,
+  Activity,
+  Gauge,
   FileText,
-  X
+  X,
+  Package
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -32,12 +34,12 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const adminMenuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'products', label: 'Manajemen Produk', icon: Package },
+    { id: 'products', label: 'Katalog Sensor IoT', icon: Package },
     { id: 'users', label: 'Manajemen User', icon: Users },
-    { id: 'orders', label: 'Pesanan', icon: ShoppingCart },
-    { id: 'transactions', label: 'Transaksi', icon: CreditCard },
+    { id: 'orders', label: 'Pesanan Sensor', icon: Truck },
+    { id: 'transactions', label: 'Transaksi', icon: FileText },
     { id: 'maintenance', label: 'Maintenance', icon: Wrench },
-    { id: 'monitoring', label: 'Monitoring Data', icon: Monitor },
+    { id: 'monitoring', label: 'Monitoring BBM', icon: Gauge },
     { id: 'messages', label: 'Sistem Pesan', icon: MessageSquare },
     { id: 'reports', label: 'Laporan', icon: FileText },
     { id: 'settings', label: 'Pengaturan', icon: Settings },
@@ -45,12 +47,12 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const userMenuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'products', label: 'Produk', icon: Package },
-    { id: 'cart', label: 'Keranjang', icon: ShoppingCart },
+    { id: 'products', label: 'Sensor IoT', icon: Package },
+    { id: 'cart', label: 'Keranjang', icon: Truck },
     { id: 'orders', label: 'Pesanan Saya', icon: FileText },
-    { id: 'monitoring', label: 'Monitoring Data', icon: Monitor },
+    { id: 'monitoring', label: 'Monitoring BBM', icon: Fuel },
     { id: 'maintenance', label: 'Request Maintenance', icon: Wrench },
-    { id: 'messages', label: 'Pesan', icon: MessageSquare },
+    { id: 'messages', label: 'Komunikasi', icon: MessageSquare },
     { id: 'reports', label: 'Laporan Saya', icon: BarChart3 },
     { id: 'settings', label: 'Pengaturan Akun', icon: Settings },
   ];
@@ -76,11 +78,11 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Monitor className="text-white" size={24} />
+              <Fuel className="text-white" size={24} />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">MonitorApp</h1>
-              <p className="text-xs text-gray-600">Platform Monitoring</p>
+              <h1 className="text-lg font-bold text-gray-900">FuelTracker</h1>
+              <p className="text-xs text-gray-600">Mining Fuel Monitor</p>
             </div>
           </div>
           <button
@@ -151,7 +153,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="p-4 border-t border-gray-200">
           <div className="text-center">
             <p className="text-xs text-gray-500">
-              © 2024 MonitorApp
+              © 2024 FuelTracker
             </p>
             <p className="text-xs text-gray-500">
               Version 1.0.0

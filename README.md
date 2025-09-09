@@ -1,82 +1,113 @@
-# Aplikasi Monitoring BBM
+# Aplikasi Monitoring BBM untuk Perusahaan Tambang
 
-Aplikasi web untuk monitoring konsumsi bahan bakar kendaraan dengan database MySQL. Sistem ini memungkinkan pengelolaan kendaraan, pencatatan transaksi BBM, dan analisis efisiensi bahan bakar.
+Aplikasi web berbasis React untuk monitoring konsumsi bahan bakar kendaraan tambang dengan sistem IoT terintegrasi. Platform ini memungkinkan perusahaan tambang untuk memantau penggunaan BBM, lokasi kendaraan, dan membeli sensor tambahan untuk ekspansi armada.
 
 ## Fitur Utama
 
-### 📊 Dashboard
-- Overview statistik lengkap (total kendaraan, biaya BBM, konsumsi, efisiensi rata-rata)
-- Daftar kendaraan terdaftar dengan ringkasan data
-- Transaksi terakhir
-- Interface modern dan responsif
+### 🏢 Multi-Company System
+- Setiap akun mewakili perusahaan tambang yang berbeda
+- Data terpisah dan aman antar perusahaan
+- Dashboard khusus per perusahaan
 
-### 🚗 Manajemen Kendaraan
-- Registrasi kendaraan baru (nama, merk, model, tahun, jenis BBM, kapasitas tangki)
-- Support berbagai jenis bahan bakar (Bensin, Solar, Listrik)
-- Tracking nomor plat kendaraan
+### 📊 Monitoring BBM Real-time
+- Tracking konsumsi BBM per kendaraan tambang
+- Monitoring lokasi kendaraan dengan GPS
+- Data sensor IoT real-time (suhu, tekanan, getaran)
+- Alert otomatis untuk anomali konsumsi BBM
+- Laporan efisiensi bahan bakar
 
-### ⛽ Pencatatan Transaksi
-- Catat pengisian BBM (isi ulang)
-- Catat konsumsi BBM
-- Data lengkap: jumlah, biaya, odometer, lokasi, catatan
-- Validasi data otomatis
+### 🚛 Manajemen Armada Tambang
+- Registrasi kendaraan tambang (dump truck, excavator, bulldozer, dll)
+- Tracking maintenance schedule
+- Monitoring kondisi mesin
+- Riwayat penggunaan dan performa
 
-### 📈 Laporan & Analisis
-- Tren konsumsi dan biaya bulanan
-- Perbandingan efisiensi antar kendaraan
-- Grafik visualisasi data
-- Statistik pertumbuhan month-over-month
+### 🛒 E-commerce Sensor IoT
+- Katalog sensor BBM dan monitoring
+- Sensor GPS tracking
+- Sensor suhu dan tekanan
+- Kit monitoring lengkap
+- Checkout dan pembayaran online
+
+### ⚙️ Request Maintenance
+- Pengajuan maintenance kendaraan tambang
+- Tracking status perbaikan
+- Estimasi biaya dan waktu
+- Riwayat maintenance
 
 ## Teknologi yang Digunakan
 
 ### Frontend
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling framework
+- **React 18** - UI framework modern
+- **TypeScript** - Type safety dan development experience
+- **Tailwind CSS** - Styling framework responsif
 - **Lucide React** - Icon library
-- **Vite** - Build tool
+- **Vite** - Build tool cepat
 
-### Database
-- **MySQL** - Primary database
-- **Stored Procedures** - Auto-calculation logic
-- **Views** - Optimized reporting queries
-- **Triggers** - Automatic efficiency calculations
+### Backend Integration Ready
+- **REST API** - Siap integrasi dengan Laravel backend
+- **Real-time Data** - WebSocket support untuk data IoT
+- **Payment Gateway** - Integrasi Midtrans/payment processor
+- **File Upload** - Support untuk gambar dan dokumen
 
-## Struktur Database
+## Struktur Aplikasi
 
-### Tabel Utama
-1. **vehicles** - Data kendaraan
-2. **fuel_transactions** - Transaksi BBM
-3. **fuel_efficiency** - Perhitungan efisiensi
+### Dashboard Admin (Perusahaan)
+- Overview konsumsi BBM seluruh armada
+- Monitoring real-time lokasi kendaraan
+- Manajemen user internal perusahaan
+- Laporan dan analytics
+- Pengaturan alert dan threshold
 
-### Views
-- **dashboard_stats** - Statistik dashboard
-- **monthly_trends** - Tren bulanan
-- **vehicle_efficiency_comparison** - Perbandingan efisiensi
+### Dashboard User (Operator/Driver)
+- Status kendaraan yang dioperasikan
+- Konsumsi BBM personal
+- Request maintenance
+- Notifikasi dan alert
 
-## Setup Database MySQL
+### E-commerce Module
+- Katalog sensor dan perangkat IoT
+- Keranjang belanja
+- Proses checkout
+- Riwayat pembelian
+- Tracking pengiriman
 
-1. **Import Schema**
-   ```sql
-   mysql -u username -p < database/schema.sql
-   ```
+## Fitur Monitoring Khusus Tambang
 
-2. **Konfigurasi Koneksi**
-   ```javascript
-   const dbConfig = {
-     host: 'localhost',
-     user: 'your_username',
-     password: 'your_password',
-     database: 'fuel_monitoring'
-   };
-   ```
+### 🔋 Fuel Management
+- Real-time fuel level monitoring
+- Konsumsi per jam operasi
+- Efisiensi BBM per jenis pekerjaan
+- Prediksi kebutuhan BBM
+- Alert fuel level rendah
 
-## Instalasi & Development
+### 📍 Location Tracking
+- GPS tracking real-time
+- Geofencing area tambang
+- Rute optimasi
+- Monitoring area kerja
+- History pergerakan
+
+### 🔧 Predictive Maintenance
+- Monitoring kondisi mesin
+- Prediksi kebutuhan maintenance
+- Alert komponen kritis
+- Scheduling maintenance otomatis
+- Cost optimization
+
+### 📈 Analytics & Reporting
+- Dashboard executive summary
+- Trend analysis konsumsi BBM
+- Perbandingan performa antar kendaraan
+- ROI analysis
+- Export data ke Excel/PDF
+
+## Setup dan Instalasi
 
 1. **Clone Repository**
    ```bash
    git clone [repository-url]
-   cd fuel-monitoring-app
+   cd fuel-monitoring-mining
    ```
 
 2. **Install Dependencies**
@@ -84,70 +115,78 @@ Aplikasi web untuk monitoring konsumsi bahan bakar kendaraan dengan database MyS
    npm install
    ```
 
-3. **Setup Database**
-   - Buat database MySQL
-   - Import schema dari `database/schema.sql`
-   - Konfigurasi koneksi database
+3. **Environment Setup**
+   ```bash
+   cp .env.example .env
+   # Configure API endpoints, payment gateway, etc.
+   ```
 
-4. **Jalankan Development Server**
+4. **Development Server**
    ```bash
    npm run dev
    ```
 
-## Fitur Unggulan
+## Integrasi IoT
 
-### 🔄 Auto-calculation
-- Sistem otomatis menghitung efisiensi BBM berdasarkan data odometer dan pengisian
-- Update real-time setiap ada transaksi baru
+### Sensor yang Didukung
+- **Fuel Level Sensor** - Monitoring level BBM real-time
+- **GPS Tracker** - Lokasi dan pergerakan kendaraan
+- **Engine Sensor** - Suhu, RPM, tekanan oli
+- **Vibration Sensor** - Deteksi anomali mesin
+- **Load Sensor** - Monitoring beban kendaraan
 
-### 📱 Responsive Design
-- Interface adaptif untuk desktop, tablet, dan mobile
-- Optimized touch interactions untuk mobile users
+### Data Flow
+1. Sensor IoT → Gateway → Cloud Server
+2. Real-time data processing
+3. Alert system untuk anomali
+4. Dashboard visualization
+5. Historical data storage
 
-### 💾 Data Persistence
-- Saat ini menggunakan localStorage untuk demo
-- Siap integrasi dengan MySQL backend
-- Data aman dan terstruktur
+## Keamanan Data
 
-### 🎨 Modern UI/UX
-- Design clean dan professional
-- Color-coded fuel types
-- Smooth animations dan transitions
-- Intuitive navigation
+### Multi-Tenant Architecture
+- Data isolation per perusahaan
+- Role-based access control
+- Encrypted data transmission
+- Audit trail lengkap
 
-## Rencana Pengembangan
+### Compliance
+- ISO 27001 ready
+- GDPR compliance
+- Industry standard security
+- Regular security updates
 
-### Backend Integration
-- [ ] REST API dengan Node.js/Express
-- [ ] MySQL connection pooling
-- [ ] Authentication & authorization
-- [ ] Data validation & sanitization
+## Roadmap Pengembangan
 
-### Fitur Tambahan
-- [ ] Export data ke Excel/PDF
-- [ ] Notifikasi maintenance schedule
-- [ ] Multi-user support
-- [ ] Backup & restore data
-- [ ] Mobile app (React Native)
+### Phase 1 (Current)
+- ✅ Basic monitoring dashboard
+- ✅ E-commerce sensor
+- ✅ User management
+- ✅ Maintenance requests
 
-### Analytics
-- [ ] Advanced reporting
-- [ ] Predictive maintenance alerts
-- [ ] Cost optimization suggestions
-- [ ] Fuel price tracking integration
+### Phase 2 (Q2 2024)
+- [ ] Advanced analytics
+- [ ] Mobile app companion
+- [ ] API integration dengan ERP
+- [ ] Automated reporting
 
-## Kontribusi
+### Phase 3 (Q3 2024)
+- [ ] AI-powered predictive maintenance
+- [ ] Advanced geofencing
+- [ ] Integration dengan sistem payroll
+- [ ] Carbon footprint tracking
 
-Kontribusi sangat diterima! Silakan:
-1. Fork repository
-2. Buat feature branch
-3. Commit changes
-4. Submit pull request
+## Support dan Dokumentasi
+
+- **Technical Support**: support@fuelmonitoring.com
+- **API Documentation**: [docs.fuelmonitoring.com]
+- **Training Materials**: [training.fuelmonitoring.com]
+- **Community Forum**: [community.fuelmonitoring.com]
 
 ## Lisensi
 
-MIT License - lihat file LICENSE untuk detail lengkap.
+Enterprise License - Hubungi sales team untuk informasi lisensi dan pricing.
 
 ---
 
-**Catatan**: Aplikasi ini dirancang untuk environment produksi dengan implementasi database MySQL yang robust dan sistem keamanan yang memadai.
+**Catatan**: Aplikasi ini dirancang khusus untuk industri pertambangan dengan fokus pada efisiensi operasional, keamanan, dan compliance dengan standar industri.
